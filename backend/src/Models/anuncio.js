@@ -1,0 +1,3 @@
+
+anunciante_id
+categoria
