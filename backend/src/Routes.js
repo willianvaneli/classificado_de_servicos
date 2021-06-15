@@ -2,6 +2,7 @@ const express = require('express');
 
 const AnuncianteController = require('./controllers/AnuncianteController');
 const AnuncioController = require('./controllers/AnuncioController');
+const PerfilController = require('./controllers/PerfilController');
 
 const routes = express.Router();
 
@@ -15,5 +16,8 @@ routes.get('/anuncios', AnuncioController.index);
 routes.post('/anuncios', AnuncioController.create);
 routes.delete('/anuncios/:id', AnuncioController.delete);
 // 
+
+// PERFIL
+routes.get('/perfil', PerfilController.index);
 
 module.exports = routes;

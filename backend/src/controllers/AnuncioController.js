@@ -1,6 +1,5 @@
 
 const connection = require('../database/connection');
-const { get } = require('../routes');
 
 module.exports = {
     async index (request,response) {
@@ -8,13 +7,6 @@ module.exports = {
     
         return response.json(anuncios);
     },
-
-    async index (request,response) {
-        const anuncios = await connection('anuncios').select('*');
-    
-        return response.json(anuncios);
-    },
-
 
     async create(request, response)  {
         const {categoria, valor, descricao} = request.body;
