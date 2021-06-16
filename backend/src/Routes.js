@@ -3,6 +3,7 @@ const express = require('express');
 const AnuncianteController = require('./controllers/AnuncianteController');
 const AnuncioController = require('./controllers/AnuncioController');
 const PerfilController = require('./controllers/PerfilController');
+const sessaoController = require('./controllers/SessaoController');
 
 const routes = express.Router();
 
@@ -19,5 +20,10 @@ routes.delete('/anuncios/:id', AnuncioController.delete);
 
 // PERFIL
 routes.get('/perfil', PerfilController.index);
+//
+
+// SEÇÃO
+routes.get('/login', sessaoController.login);
+//
 
 module.exports = routes;
