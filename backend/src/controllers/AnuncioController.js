@@ -3,7 +3,17 @@ const connection = require('../database/connection');
 
 module.exports = {
     async index (request,response) {
-        const anuncios = await connection('anuncios').select('*');
+        const { page = 1 } = request.query;
+
+        const [count] = await connection('anuncios').count();
+
+        const anuncios = await connection('anuncios')
+        .join('anunciantes','anunciantes.id','=','anuncios.anunciante_id')
+        .limit(5)
+        .offset((page - 1 ) * 5)
+        .select(['anuncios.*', 'anunciantes.nome','anunciantes.razao_social','anunciantes.email','anunciantes.telefone','anunciantes.cidade','anunciantes.estado']);
+
+        response.header('total_anuncios', count['count(*)']);
     
         return response.json(anuncios);
     },
