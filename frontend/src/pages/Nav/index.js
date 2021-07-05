@@ -17,7 +17,7 @@ export default function Nav(){
               link.style.animation
                 ? (link.style.animation = "")
                 : (link.style.animation = `navLinkFade 0.5s ease forwards ${
-                    index / 7 + 0.3
+                    index / 7 + 0.15
                   }s`);
             });
           };
