@@ -28,11 +28,10 @@
     height: 8vh;
   }
   
-
-  
   .nav-list {
     list-style: none;
     display: flex;
+    justify-content: flex-end;
   }
   
   .nav-list li {
@@ -76,6 +75,7 @@
     }
     .menu {
       display: block;
+      float: right;
     }
   }
   

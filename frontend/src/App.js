@@ -1,12 +1,7 @@
 import "./global.css";
 
-import Rotas from './routes';
+import Rotas from './routes/routes';
 
-function App() {
-  return (
-    
-      <Rotas/>
-  );
-}
+const App = () => <Rotas/>;
 
 export default App;
