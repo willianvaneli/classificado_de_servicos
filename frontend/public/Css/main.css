@@ -1,0 +1,53 @@
+body{
+    width: 100%;
+    height: 100%;
+}
+.menuPrincipal{
+    width: 100%;
+    background-color: black;
+    height: 60px;
+}
+main{
+    margin: 0 auto;
+    width: 980px;
+    float: center;
+    position: relative;
+}
+.header2{
+    background-color: blanchedalmond;
+    width: 100%;
+    border-bottom: 3px solid bisque;
+}
+.logo{
+    width: 90%;
+}
+.menu1 ul li{
+    display: inline-block;
+    float: left;
+    list-style: none;
+}
+.menu2 ul li{
+    display: inline-block;
+    float: right;
+    list-style: none;
+}
+.menu3 ul li{
+    display: inline-block;
+    list-style: none;
+}
+.menu3{
+    float: center;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 15px;
+}
+th {
+    text-align: center;
+}
+table {
+    border-spacing: 5px;
+}
