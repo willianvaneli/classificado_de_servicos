@@ -25,10 +25,10 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
 
-    const signIn = useCallback( async () => {
+    const signIn = useCallback( async (data) => {
     
         setLoading(true);
-        const response = await signInService();
+        const response = await signInService(data);
         setUser(response.user);
         // api.defaults.headers.Authorization = `Baerer ${response.token}`;
         setStorageUser(response.user);
