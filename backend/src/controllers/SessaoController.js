@@ -6,7 +6,10 @@ module.exports = {
 
 
     async login (request,response) {
+        console.log(request.data);
+        console.log("\n--------\n");
         const {email, senha} = request.body;
+        
 
         const anunciante = await connection('anunciantes').where('email',email).first();
         if(!anunciante){

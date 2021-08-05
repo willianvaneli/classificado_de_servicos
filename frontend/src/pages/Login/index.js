@@ -12,10 +12,10 @@ export default function Login(){
     const { signed, signIn, loading } = useAuth();
 
     const handleSignIn = useCallback( () => {
-        let login = document.getElementById("login");
-        let senha = document.getElementById("senha");
+        let email = document.getElementById("email").value;
+        let senha = document.getElementById("senha").value;
         const data = {
-            login,
+            email,
             senha
         };
         signIn(data);
@@ -37,7 +37,7 @@ export default function Login(){
                         <section className="form" method="POST" action="./login">
                             <form>
                                 <h1>Faça seu Login</h1>
-                                <input id="login" name="login" placeholder="Login" />
+                                <input id="email" name="email" placeholder="Email" />
                                 <input id="senha" name="senha" placeholder="Senha" />
                                 <button className="button" onClick={ handleSignIn }>Entrar</button>
                                 <a href="/cadastro"><FiLogIn size={18} color="black"/>

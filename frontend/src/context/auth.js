@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect, useCallback } from 'react';
 import { signInService } from '../services/auth';
 import useLocalStorage from '../hooks/useLocalStorage';
-
+import api from "../services/api";
 
 const AuthContext = createContext({});
 
@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
 
         if (storageUser && storageToken) {
             setUser(storageUser);
-            // api.defaults.headers.Authorization = `Baerer ${storagedToken}`;
+            api.defaults.headers.Authorization = `Baerer ${storageToken}`;
         }
         setLoading(false);        
     }, []);
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
         const response = await signInService(data);
         setUser(response.user);
-        // api.defaults.headers.Authorization = `Baerer ${response.token}`;
+        api.defaults.headers.Authorization = `Baerer ${response.token}`;
         setStorageUser(response.user);
         setStorageToken(response.token);
         setLoading(false);
@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
     
         setLoading(true);
         removeStorageUser();
-        removeStorageToken()
+        removeStorageToken();
         setUser({});
         setLoading(false);
     }, []);

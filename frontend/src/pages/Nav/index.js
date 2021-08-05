@@ -39,8 +39,8 @@ export default function Nav(){
                     </div>
                     <ul className="nav-list">
                         <li><a href="/">Início</a></li>
-                        <li><a href="#">Sobre</a></li>
-                        <li><a href="#">Contato</a></li>
+                        <li><a href="/">Sobre</a></li>
+                        <li><a href="/">Contato</a></li>
                     </ul>
                 </nav>
             </header>
