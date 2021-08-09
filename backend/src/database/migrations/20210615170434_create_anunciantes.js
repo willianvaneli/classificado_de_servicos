@@ -6,7 +6,7 @@ exports.up = function(knex) {
         table.string('nome', 255).notNullable();
         table.string('razao_social', 255);
         table.string('senha', 255).notNullable();
-        table.string('email', 255).notNullable();
+        table.unique('email', 255).notNullable();
         table.string('telefone', 255).notNullable();
         table.string('cidade', 255).notNullable();
         table.string('estado', 2).notNullable();

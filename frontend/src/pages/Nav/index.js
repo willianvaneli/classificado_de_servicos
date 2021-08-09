@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import './styles.css';
+import useAuth from '../../hooks/useAuth';
 
 export default function Nav(){
     
-
+    const { signed, signOut, loading } = useAuth();
 
 
     const handleClick = () => {
@@ -26,6 +27,10 @@ export default function Nav(){
         animateLinks();
     };
 
+    const handleSignOut = useCallback( () => {
+        signOut();
+    }, [signOut]);
+
 
 
     return (
@@ -39,8 +44,10 @@ export default function Nav(){
                     </div>
                     <ul className="nav-list">
                         <li><a href="/">Início</a></li>
+                        { signed ? '' : (<li><a href="/login" >Entrar</a></li>)}
                         <li><a href="/">Sobre</a></li>
                         <li><a href="/">Contato</a></li>
+                        { signed ? (<li><a href="" onClick={ handleSignOut }>Sair</a></li>) : ''}
                     </ul>
                 </nav>
             </header>

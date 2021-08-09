@@ -10,15 +10,21 @@ module.exports = {
 
 
     async create(request, response)  {
-        const {nome, razao_social, senha, email,telefone, cidade, estado} = request.body;
-    
-        await connection('anunciantes').insert({
-            nome, razao_social, senha, email,telefone, cidade, estado,
-        });
-    
-        return response.json({
-            result: 'deu certo'
-        })
+        try {
+            
+            
+            const {nome, razao_social, senha, email,telefone, cidade, estado} = request.body;
+        
+            const tal = await connection('anunciantes').insert({
+                nome, razao_social, senha, email,telefone, cidade, estado,
+            });
+            console.log(tal);
+            return response.status(200).json({ success: true});
+
+        } catch (error) {
+            console.log(error);
+            return response.status(400).json({ error: error});
+        }
     }
 
 

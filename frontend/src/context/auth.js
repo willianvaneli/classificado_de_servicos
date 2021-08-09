@@ -29,10 +29,10 @@ export const AuthProvider = ({ children }) => {
     
         setLoading(true);
         const response = await signInService(data);
-        setUser(response.user);
+        setUser(response.data.anunciante);
         api.defaults.headers.Authorization = `Baerer ${response.token}`;
-        setStorageUser(response.user);
-        setStorageToken(response.token);
+        setStorageUser(response.data.anunciante);
+        setStorageToken(response.data.token);
         setLoading(false);
     }, []);
 
@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
     return (
 
         <AuthContext.Provider value={{ 
-            signed: (user && user.name) ? true : false, 
+            signed: (user && user.nome) ? true : false, 
             user, 
             signIn, 
             signOut, 
