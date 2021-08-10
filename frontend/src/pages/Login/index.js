@@ -3,7 +3,7 @@ import {FiLogIn} from 'react-icons/fi';
 import './styles.css';
 import background from '../../assets/background_login.jpg';
 import useAuth from '../../hooks/useAuth';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import SomeSpinner from '../../components/SomeSpinner';
 
 
@@ -37,11 +37,11 @@ export default function Login(){
                         <section className="form" method="POST" action="./login">
                             <form>
                                 <h1>Faça seu Login</h1>
-                                <input id="email" name="email" placeholder="Email" />
+                                <input type="email" id="email" name="email" placeholder="Email" />
                                 <input id="senha" name="senha" type="password" placeholder="Senha" />
                                 <button className="button" onClick={ handleSignIn }>Entrar</button>
-                                <a href="/cadastro"><FiLogIn size={18} color="black"/>
-                                Não tenho cadastro</a>
+                                <Link to="/cadastro"><FiLogIn size={18} color="black"/>
+                                Não tenho cadastro</Link>
                                 
                             </form>
                         </section>

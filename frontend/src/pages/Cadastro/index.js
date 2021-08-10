@@ -2,15 +2,19 @@ import React, { useCallback } from 'react';
 import './styles.css';
 import background from '../../assets/background_login.jpg';
 import anuncianteService from '../../services/anunciante';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 
 
 export default function Cadastro(){
+    //Usado para redirecionar para rotas
+    const history = useHistory();
 
     const { signed  } = useAuth();
 
-    async function handleCadastrar(){
+    async function handleCadastrar(e){
+        //Previne a página de ser recarregada após o submit
+        e.preventDefault();
         let nome = document.getElementById("nome").value;
         let email = document.getElementById("email").value;
         let razao_social = document.getElementById("razao_social").value;
@@ -27,12 +31,16 @@ export default function Cadastro(){
             estado,
             senha
         };
-        
-        const response = await anuncianteService.cadastrar(data);
-        console.log(response.success);
-        if (response.success){
-            <Redirect to='./home'/>
+        try {
+            
+            const response = await anuncianteService.cadastrar(data);
+            console.log(response.success);
+            alert('Cadastro realizado com sucesso');
+            history.push('/');
+        } catch (error) {
+            alert('Erro no cadastro, tente novamente');
         }
+       
     };
 
 
@@ -43,16 +51,16 @@ export default function Cadastro(){
                     <div className="background" style={{ backgroundImage: `url(${background})` }}></div>
                     <div className="login-container">
                         <section className="form"  >
-                            <form>
+                            <form onSubmit={handleCadastrar}>
                                 <h1>Faça seu cadastro</h1>
                                 <input id="nome" name="nome" placeholder="Nome" required />
-                                <input id="email" name="email" placeholder="Email" required />
+                                <input type="email" id="email" name="email" placeholder="Email" required />
                                 <input id="razao_social" name="razao_social" placeholder="Razao Social" />
                                 <input id="telefone" name="telefone" placeholder="Telefone" required/>
                                 <input id="cidade" name="cidade" placeholder="Cidade" required/>
                                 <input id="estado" name="estado" placeholder="Estado" required/>
                                 <input type="password" id="senha" name="senha" placeholder="Senha" required/>
-                                <button className="button" onClick={ handleCadastrar }>cadastrar</button>
+                                <button className="button" type="submit">cadastrar</button>
                                 
                             </form>
                         </section>
