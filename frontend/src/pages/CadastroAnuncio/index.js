@@ -1,72 +1,82 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import './styles.css';
 import background from '../../assets/background_login.jpg';
-import anuncianteService from '../../services/anunciante';
-import { Redirect, useHistory } from 'react-router-dom';
+import {  useHistory } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
+import exemploAnuncio from '../../assets/anuncio_exemplo.png';
+import api from '../../services/api';
 
 
 export default function Cadastro(){
     //Usado para redirecionar para rotas
     const history = useHistory();
 
-    const { signed  } = useAuth();
+    const { user  } = useAuth();
 
     async function handleCadastrar(e){
         //Previne a página de ser recarregada após o submit
         e.preventDefault();
-        let nome = document.getElementById("nome").value;
-        let email = document.getElementById("email").value;
-        let razao_social = document.getElementById("razao_social").value;
-        let telefone = document.getElementById("telefone").value;
-        let cidade = document.getElementById("cidade").value;
-        let estado = document.getElementById("estado").value;
-        let senha = document.getElementById("senha").value;
+        let categoria = document.getElementById("categoria").value;
+        let valor = document.getElementById("valor").value;
+        let descricao = document.getElementById("descricao").value;
         const data = {
-            nome,
-            email,
-            razao_social,
-            telefone,
-            cidade,
-            estado,
-            senha
+            anunciante_id: user.id,
+            categoria,
+            valor,
+            descricao
         };
         try {
-            
-            const response = await anuncianteService.cadastrar(data);
-            console.log(response.success);
-            alert('Cadastro realizado com sucesso');
-            history.push('/');
+            const response = await api.post(`http://localhost:3333/anuncios/`,{
+                data
+            });
+
+            alert('Anúncio cadastrado com sucesso');
+            retornarPerfil();
         } catch (error) {
             alert('Erro no cadastro, tente novamente');
         }
        
     };
 
+    function retornarPerfil(){
+        history.push('/perfil');
+    }
+
 
     return (
         <div>
-            {signed ? (<Redirect to='./home'/>) :(
-                <div >
-                    <div className="background" style={{ backgroundImage: `url(${background})` }}></div>
-                    <div className="login-container">
-                        <section className="form"  >
-                            <form onSubmit={handleCadastrar}>
-                                <h1>Faça seu cadastro</h1>
-                                <input id="nome" name="nome" placeholder="Nome" required />
-                                <input type="email" id="email" name="email" placeholder="Email" required />
-                                <input id="razao_social" name="razao_social" placeholder="Razao Social" />
-                                <input id="telefone" name="telefone" placeholder="Telefone" required/>
-                                <input id="cidade" name="cidade" placeholder="Cidade" required/>
-                                <input id="estado" name="estado" placeholder="Estado" required/>
-                                <input type="password" id="senha" name="senha" placeholder="Senha" required/>
-                                <button className="button" type="submit">cadastrar</button>
+            <div className="background" style={{ backgroundImage: `url(${background})` }}></div>
+            <div className="container">
+                <section className="form"  >
+                    <form onSubmit={handleCadastrar}>
+                        <div className="atributos">
+                            <img src={exemploAnuncio} alt="Anuncio exemplo"/>
+                                                
+                            <div >
+                                <strong>Categoria</strong>
+                                <select className="select" id="categoria" name="categoria"  required>
+                                    <option></option>
+                                    <option>Auxiliar de serviços gerais</option>
+                                </select>
+
+                                <strong>Valor</strong>
+                                <input type="number"  min="0.0" step="0.01" id="valor" name="valor"  required/>
                                 
-                            </form>
-                        </section>
-                    </div>
-                </div>
-            )}
+
+                                <strong>Descrição</strong>
+                                <textarea id="descricao" name="descricao"  rows="4"  required/>
+
+                            </div>
+                        </div>
+                        <div className="botoes">
+                            <button className="confirmar" type="submit">Cadastrar</button>
+                            <button className="cancelar" onClick={() => retornarPerfil()} >Cancelar</button>
+                        </div>
+                        
+                        
+                    </form>
+                </section>
+            </div>
         </div>
 
     );

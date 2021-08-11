@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import './styles.css';
 import background from '../../assets/background_login.jpg'
 import useAuth from '../../hooks/useAuth';
-import { Redirect } from 'react-router-dom';
+import { Link,Redirect, useHistory } from 'react-router-dom';
 import SomeSpinner from '../../components/SomeSpinner';
 import exemploAnuncio from '../../assets/anuncio_exemplo.png';
 import { FiTrash2 } from 'react-icons/fi';
@@ -12,7 +12,7 @@ import api from '../../services/api';
 export default function Login(){
     const [anuncios, setAnuncios] = useState([]);
     const { user,signed, signOut, loading } = useAuth();
-    
+    const history = useHistory();
     useEffect(() => {
         api.get('http://localhost:3333/perfil',{
             headers:{
@@ -24,10 +24,7 @@ export default function Login(){
         })
     }, []);
 
-    const handleSignOut = useCallback( () => {
-        
-        signOut();
-    }, [signOut]);
+
 
     async function handleDeleteAnuncio(id) {
         try{
@@ -60,7 +57,7 @@ export default function Login(){
                     <div className="perfil-container">
                         <div className="cabecalho">
                             <h5>Anúncios</h5>
-                            <button  className="button" onClick={ handleSignOut }>Cadastrar novo anúncio</button>
+                            <Link to="/perfil/anuncios"  className="button" >Cadastrar novo anúncio</Link>
                         </div>
                     
                         <section >
@@ -74,7 +71,7 @@ export default function Login(){
                                                 <p>{anuncio.categoria}</p>
 
                                                 <strong>Valor</strong>
-                                                <p>{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(anuncio.valor)}</p>
+                                                <p>{ (anuncio.valor!==null) ? Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(anuncio.valor) :'0,00' }</p>
 
                                                 <strong>Descrição</strong>
                                                 <p>{anuncio.descricao}</p>

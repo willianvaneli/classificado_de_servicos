@@ -20,12 +20,16 @@
 }
 
 .perfil-container ul li img{
-    width: 50%;
+    width: 40%;
     padding-right: 3em;
 }
 .perfil-container ul li p{
     padding-left: 5%;
-    
+    width: 100%;
+}
+
+.atributos{
+    width: 50%;
 }
 
 .perfil-container ul li button {
@@ -41,19 +45,18 @@
     display: flex;
     padding-bottom: 1em;
 }
-.cabecalho button {
+.cabecalho .button {
     margin-left: auto;
     width: auto;
     height: auto;
     font-weight: 400;
-    background-color: #23232e;
+    background-color: #e02041;
     margin-top: 0px;
-    display: inline-block;
     text-align: center;
     text-decoration: none;
     font-size:  18px;
-    line-height: 0px;
-    padding: 4px;
+    line-height: 18px;
+    padding: 8px;
     transition: filter 0.2s;
 }
 

@@ -19,14 +19,19 @@ module.exports = {
     },
 
     async create(request, response)  {
-        const {categoria, valor, descricao} = request.body;
-        const anunciante_id = request.headers.anunciante_id;
+        try {
+            const {anunciante_id, categoria, valor, descricao} = request.body.data;
+            const [id] = await connection('anuncios').insert({
+                categoria, valor, descricao, anunciante_id
+            });
+
+            return response.status(200).json({ success: true});
+        } catch (error) {
+            return response.status(400).json({ error: error});
+        }
+        
     
-        const [id] = await connection('anuncios').insert({
-            categoria, valor, descricao, anunciante_id
-        });
-    
-        return response.json({ result: id })
+        
     },
 
     async delete (request,response) {

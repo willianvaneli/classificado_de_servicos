@@ -12,7 +12,7 @@ module.exports = {
     async create(request, response)  {
         try {
             
-            
+            console.log('criando anunciante');
             const {nome, razao_social, senha, email,telefone, cidade, estado} = request.body;
         
             const tal = await connection('anunciantes').insert({

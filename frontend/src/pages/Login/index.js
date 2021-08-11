@@ -30,7 +30,7 @@ export default function Login(){
 
     return (
         <div>
-            {signed ? (<Redirect to='./home'/>) :(
+            {signed ? (<Redirect to='./perfil'/>) :(
                 <div >
                     <div className="background" style={{ backgroundImage: `url(${background})` }}></div>
                     <div className="login-container">
