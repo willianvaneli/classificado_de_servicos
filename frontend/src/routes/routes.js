@@ -8,7 +8,8 @@ import { AuthProvider } from '../context/auth';
 import Login from '../pages/Login';
 import Home from '../pages/Home';
 import Perfil from '../pages/Perfil';
-import Cadastro from '../pages/Cadastro';
+import CadastroAnunciante from '../pages/CadastroAnunciante';
+import CadastroAnuncio from '../pages/CadastroAnuncio';
 
 
 
@@ -19,9 +20,10 @@ export default function Routes(){
                 <Layout>
                     <Switch>
                         <Route exact path="/" component={Home} />
-                        <Route path="/login" exact component={Login} />
-                        <Route path="/cadastro" component={Cadastro} />
-                        <PrivateRoute path="/perfil" component={Perfil} />
+                        <Route path="/login" component={Login} />
+                        <Route path="/cadastro" component={CadastroAnunciante} />
+                        <PrivateRoute exact path="/perfil" component={Perfil} />
+                        <PrivateRoute path="/perfil/anuncios" component={CadastroAnuncio} />
                         
                     </Switch>
                 </Layout>
