@@ -44,7 +44,7 @@ export default function Nav(){
                     </div>
                     <ul className="nav-list">
                         <li><a href="/">Início</a></li>
-                        { signed ? '' : (<li><a href="/login" >Entrar</a></li>)}
+                        { signed ? (<li><a href="/perfil" >Perfil</a></li>) : (<li><a href="/login" >Entrar</a></li>)}
                         <li><a href="/">Sobre</a></li>
                         <li><a href="/">Contato</a></li>
                         { signed ? (<li><a href="" onClick={ handleSignOut }>Sair</a></li>) : ''}

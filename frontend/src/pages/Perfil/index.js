@@ -29,10 +29,20 @@ export default function Login(){
         signOut();
     }, [signOut]);
 
-    const handleDeleteAnuncio = useCallback( (id) => {
+    async function handleDeleteAnuncio(id) {
+        try{
+            await api.delete(`http://localhost:3333/anuncios/${id}`,{
+                headers:{
+                    anunciante_id: user.id,
+                }
+            });
+
+            setAnuncios(anuncios.filter(anuncio => anuncio.id !== id));
+        }catch(err){
+            alert('Erro ao deletar o anúncio, tente novamente');
+        }
         
-        
-    }, []);
+    };
 
     if (loading) {
         return (
@@ -71,7 +81,7 @@ export default function Login(){
 
                                         </div>
 
-                                        <button onClick={() => handleDeleteAnuncio(1)} type="button">
+                                        <button onClick={() => handleDeleteAnuncio(anuncio.id)} type="button">
                                             <FiTrash2 size={20} color="#a8a8b3" />
                                         </button>
                                         
