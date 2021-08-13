@@ -4,7 +4,7 @@ import useAuth from '../../hooks/useAuth';
 
 export default function Nav(){
     
-    const { signed, signOut, loading } = useAuth();
+    const { signed, signOut } = useAuth();
 
 
     const handleClick = () => {

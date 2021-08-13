@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import './styles.css';
 import background from '../../assets/background_login.jpg';
 import {  useHistory } from 'react-router-dom';
@@ -7,18 +7,31 @@ import exemploAnuncio from '../../assets/anuncio_exemplo.png';
 import api from '../../services/api';
 
 
-export default function Cadastro(){
+export default function Edit(request){
     //Usado para redirecionar para rotas
     const history = useHistory();
 
     const { user  } = useAuth();
+    const anuncio_id = request.match.params.id;
+    const [categoria, setCategoria ] = useState('');
+    const [valor, setValor ] = useState(0);
+    const [descricao, setDescricao ] = useState('');
+    
+    useEffect(() => {
+        api.get(`http://localhost:3333/anuncios/${anuncio_id}`,{
+            headers:{
+                anunciante_id: user.id,
+            }
+        }).then(response => {
+            setCategoria(response.data.categoria);
+            setValor(response.data.valor);
+            setDescricao(response.data.descricao);
+        })
+    }, []);
 
-    async function handleCadastrar(e){
+    async function handleEdit(e){
         //Previne a página de ser recarregada após o submit
         e.preventDefault();
-        let categoria = document.getElementById("categoria").value;
-        let valor = document.getElementById("valor").value;
-        let descricao = document.getElementById("descricao").value;
         const data = {
             anunciante_id: user.id,
             categoria,
@@ -26,14 +39,14 @@ export default function Cadastro(){
             descricao
         };
         try {
-            await api.post(`http://localhost:3333/anuncios/`,{
+            await api.put(`http://localhost:3333/anuncios/${anuncio_id}`,{
                 data
             });
 
-            alert('Anúncio cadastrado com sucesso');
+            alert('Anúncio atualizado com sucesso');
             retornarPerfil();
         } catch (error) {
-            alert('Erro no cadastro, tente novamente');
+            alert('Erro ao atualizar anúncio, tente novamente');
         }
        
     };
@@ -48,23 +61,30 @@ export default function Cadastro(){
             <div className="background" style={{ backgroundImage: `url(${background})` }}></div>
             <div className="container">
                 <section className="form"  >
-                    <form onSubmit={handleCadastrar}>
+                    <form onSubmit={handleEdit}>
                         <div className="atributos">
                             <img src={exemploAnuncio} alt="Anuncio exemplo"/>
                                                 
                             <div >
                                 <strong>Categoria</strong>
-                                <select className="select" id="categoria" name="categoria"  required>
+                                <select className="select"  
+                                    value={categoria}
+                                    onChange={ e => setCategoria(e.target.value)} required>
                                     <option></option>
                                     <option>Auxiliar de serviços gerais</option>
                                 </select>
 
                                 <strong>Valor</strong>
-                                <input type="number"  min="0.0" step="0.01" id="valor" name="valor"  required/>
+                                <input type="number"  min="0.0" step="0.01"   
+                                value={valor}
+                                onChange={ e => setValor(e.target.value)} required/>
                                 
 
                                 <strong>Descrição</strong>
-                                <textarea id="descricao" name="descricao"  rows="4"  required/>
+                                <textarea   rows="4"  
+                                value={descricao}
+                                onChange={ e => setDescricao(e.target.value)}
+                                required/>
 
                             </div>
                         </div>

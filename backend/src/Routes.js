@@ -15,8 +15,10 @@ routes.post('/anunciantes', AnuncianteController.create);
 
 // ANUNCIOS
 routes.get('/anuncios', AnuncioController.index);
+routes.get('/anuncios/:id', AnuncioController.getAnuncio);
 routes.post('/anuncios', AuthMidleware, AnuncioController.create);
 routes.delete('/anuncios/:id', AuthMidleware, AnuncioController.delete);
+routes.put('/anuncios/:id', AuthMidleware, AnuncioController.update);
 // 
 
 // PERFIL

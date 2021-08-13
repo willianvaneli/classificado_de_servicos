@@ -10,6 +10,7 @@ import Home from '../pages/Home';
 import Perfil from '../pages/Perfil';
 import CadastroAnunciante from '../pages/CadastroAnunciante';
 import CadastroAnuncio from '../pages/CadastroAnuncio';
+import EdicaoAnuncio from '../pages/EdicaoAnuncio'
 
 
 
@@ -23,7 +24,8 @@ export default function Routes(){
                         <Route path="/login" component={Login} />
                         <Route path="/cadastro" component={CadastroAnunciante} />
                         <PrivateRoute exact path="/perfil" component={Perfil} />
-                        <PrivateRoute path="/perfil/anuncios" component={CadastroAnuncio} />
+                        <PrivateRoute exact path="/perfil/anuncios" component={CadastroAnuncio} />
+                        <PrivateRoute path="/perfil/anuncios/:id" component={EdicaoAnuncio} />
                         
                     </Switch>
                 </Layout>

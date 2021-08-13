@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import './styles.css';
 import background from '../../assets/background_login.jpg';
 import anuncianteService from '../../services/anunciante';

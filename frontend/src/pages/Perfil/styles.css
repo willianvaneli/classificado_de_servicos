@@ -32,7 +32,15 @@
     width: 50%;
 }
 
-.perfil-container ul li button {
+.perfil-container ul li .btn-edit {
+    align-self: flex-start;
+    background: #FFF;
+    padding-top: 14px;
+    border: 0;
+    
+}
+
+.perfil-container ul li .btn-delete {
     position: absolute;
     background: #FFF;
     right: 24px;
