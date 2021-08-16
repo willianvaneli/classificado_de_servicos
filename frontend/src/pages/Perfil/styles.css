@@ -20,7 +20,7 @@
 }
 
 .perfil-container ul li img{
-    width: 40%;
+    width: 30%;
     padding-right: 3em;
 }
 .perfil-container ul li p{
@@ -32,19 +32,16 @@
     width: 50%;
 }
 
-.perfil-container ul li .btn-edit {
-    align-self: flex-start;
-    background: #FFF;
-    padding-top: 14px;
-    border: 0;
-    
-}
-
-.perfil-container ul li .btn-delete {
+.botoes{
     position: absolute;
-    background: #FFF;
     right: 24px;
     top: 24px;
+    border: 0;
+}
+
+.botoes button {
+    align-self: flex-start;
+    background: #FFF;
     border: 0;
     
 }

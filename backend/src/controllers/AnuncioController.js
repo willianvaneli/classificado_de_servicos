@@ -4,7 +4,7 @@ const connection = require('../database/connection');
 module.exports = {
     async index (request,response) {
         const { page = 1 } = request.query;
-
+        console.log(request.query);
         const [count] = await connection('anuncios').count();
 
         const anuncios = await connection('anuncios')
@@ -19,7 +19,6 @@ module.exports = {
     },
 
     async getAnuncio (request,response) {
-        
         const {id} = request.params;
         const anunciante_id = request.headers.anunciante_id;
 
