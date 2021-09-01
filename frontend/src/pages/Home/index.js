@@ -1,4 +1,5 @@
 import React,{ useState, useEffect} from 'react';
+import { useHistory } from 'react-router-dom';
 import './styles.css';
 import { Slider } from '@material-ui/core';
 import qs from 'qs';
@@ -8,7 +9,7 @@ import exemploAnuncio from '../../assets/anuncio_exemplo.png';
 
 const LIMIT = 6;
 export default function Home(){
-    
+    const history = useHistory();
     const [categoria, setCategoria ] = useState('');
     const [minValor, setMinValor] = React.useState(0);
     const [maxValor, setMaxValor] = React.useState(200);
@@ -45,6 +46,10 @@ export default function Home(){
     const handleChangeCategoria = (event, newValor) => {
         setCategoria(event.target.value);
     };
+
+    function handleShow(id){
+        history.push(`/anuncios/show/${id}`);
+    }
     
     return (
         <div className="home">
@@ -83,7 +88,7 @@ export default function Home(){
             <section className="container-anuncios">
                 <ul className="linha">
                     {anuncios.map(anuncio =>(
-                        <li key={anuncio.id} className="itens">
+                        <li key={anuncio.id} className="itens" onClick={() => handleShow(anuncio.id)}>
                             <img src={exemploAnuncio} alt="Anuncio exemplo"/>
                         
                             <div className="atributos">

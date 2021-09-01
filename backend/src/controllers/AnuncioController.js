@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/auth');
 const connection = require('../database/connection');
 const {promisify} = require('util');
+const e = require('express');
 
 module.exports = {
     async index (request,response) {
@@ -18,6 +19,37 @@ module.exports = {
         response.header('total_anuncios', count['count(*)']);
     
         return response.json(anuncios);
+    },
+
+    async show (request,response) {
+        try {
+            const {id} = request.params;
+
+            const anuncio = await connection('anuncios').where('id',id).first();
+
+            const anunciante = await connection('anunciantes').where('id',anuncio.anunciante_id).first();
+            
+            const data = {
+                anuncio,
+                anunciante :{
+                    nome : anunciante.nome,
+                    razao_social : anunciante.razao_social,
+                    telefone : anunciante.telefone,
+                    cidade : anunciante.cidade,
+                    estado : anunciante.estado,
+
+                }
+            };
+            return response.json(data);
+            
+        } catch (error) {
+            console.log(error.message);
+            return response.status(401).json({
+                error: true,
+                code: 130,
+                message: error.message
+            })
+        }
     },
 
     async getAnuncio (request,response) {
