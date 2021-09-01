@@ -4,6 +4,7 @@ const AnuncianteController = require('./controllers/AnuncianteController');
 const AnuncioController = require('./controllers/AnuncioController');
 const PerfilController = require('./controllers/PerfilController');
 const SessaoController = require('./controllers/SessaoController');
+const HomeController = require('./controllers/HomeController');
 const AuthMidleware = require('./Midlewares/AuthMidleware');
 
 const routes = express.Router();
@@ -23,6 +24,10 @@ routes.put('/anuncios/:id', AuthMidleware, AnuncioController.update);
 
 // PERFIL
 routes.get('/perfil', AuthMidleware, PerfilController.index);
+//
+
+// PERFIL
+routes.get('/home', HomeController.index);
 //
 
 // SEÇÃO

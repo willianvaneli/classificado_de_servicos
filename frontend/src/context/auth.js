@@ -29,10 +29,10 @@ export const AuthProvider = ({ children }) => {
     
         setLoading(true);
         const response = await signInService(data);
+        api.defaults.headers.Authorization = `Baerer ${response.data.token}`;
+        await setStorageUser(response.data.anunciante);
+        await setStorageToken(response.data.token);
         setUser(response.data.anunciante);
-        api.defaults.headers.Authorization = `Baerer ${response.token}`;
-        setStorageUser(response.data.anunciante);
-        setStorageToken(response.data.token);
         setLoading(false);
     }, []);
 

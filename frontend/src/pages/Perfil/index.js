@@ -34,10 +34,11 @@ export default function Login(){
                 anunciante_id: user.id,
             }
         }).then(response => {
+            console.log(response);
             setAnuncios(response.data.anuncios);
             setTotalAnuncios(response.data.count);
         })
-    }, [offset]);
+    }, [user,offset]);
 
 
 
@@ -87,7 +88,21 @@ export default function Login(){
                                         
                                             <div className="atributos">
                                                 <strong>Categoria</strong>
-                                                <p>{anuncio.categoria}</p>
+                                                <select className="select" id="categoria" name="categoria" 
+                                                value={anuncio.categoria}
+                                                disabled>
+                                                    <option value=""></option>
+                                                    <option value="auxiliar_servicos_gerais">Auxiliar de serviços gerais</option>
+                                                    <option value="baba">Babá</option>
+                                                    <option value="festas">Festas</option>
+                                                    <option value="encanador">Encanador</option>
+                                                    <option value="informatica">Informática</option>
+                                                    <option value="jardineiro">Jardineiro</option>
+                                                    <option value="marceneiro">Marceneiro</option>
+                                                    <option value="pedreiro">Pedreiro</option>
+                                                    <option value="pintor">Pintor</option>
+                                                    <option value="transporte">Transporte</option>
+                                                </select>
 
                                                 <strong>Valor</strong>
                                                 <p>{ (anuncio.valor!==null) ? Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(anuncio.valor) :'0,00' }</p>

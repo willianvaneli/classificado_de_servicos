@@ -1,5 +1,7 @@
-
+const jwt = require('jsonwebtoken');
+const config = require('../config/auth');
 const connection = require('../database/connection');
+const {promisify} = require('util');
 
 module.exports = {
     async index (request,response) {
@@ -19,26 +21,60 @@ module.exports = {
     },
 
     async getAnuncio (request,response) {
-        const {id} = request.params;
-        const anunciante_id = request.headers.anunciante_id;
+        let [, token]  = request.headers.authorization.split(' ');
+        try {
+            let decoded = await promisify(jwt.verify)(token, config.secret);
+            console.log(decoded);
+            if(!decoded){
+                return response.status(401).json({
+                    error: true,
+                    code: 130,
+                    message: "O token está expirado!"
+                })
+            }else {
+                
+                const {id} = request.params;
+                const anunciante_id = decoded.id;
 
-        const anuncio = await connection('anuncios').where('id',id).first();
-        console.log(anuncio);
-        if(anuncio == null || anuncio.anunciante_id != anunciante_id){
-            return response.status(401).json( {error: 'Operação não permitida'});
+                const anuncio = await connection('anuncios').where('id',id).first();
+                if(anuncio == null || anuncio.anunciante_id != anunciante_id){
+                    return response.status(401).json( {error: 'Operação não permitida'});
+                }
+
+                return response.json(anuncio);
+            }
+        } catch (error) {
+            console.log(error.message);
+            return response.status(401).json({
+                error: true,
+                code: 130,
+                message: "O token é inválido!"
+            })
         }
-
-        return response.json(anuncio);
     },
 
     async create(request, response)  {
         try {
-            const {anunciante_id, categoria, valor, descricao} = request.body.data;
-            const [id] = await connection('anuncios').insert({
-                categoria, valor, descricao, anunciante_id
-            });
+            let [, token]  = request.headers.authorization.split(' ');
+            let decoded = await promisify(jwt.verify)(token, config.secret);
+            if(!decoded){
+                return response.status(401).json({
+                    error: true,
+                    code: 130,
+                    message: "O token está expirado!"
+                })
+            }else {
+                
+                const anunciante_id = decoded.id;
 
-            return response.status(200).json({ success: true});
+                const {categoria, valor, descricao} = request.body.data;
+                const [id] = await connection('anuncios').insert({
+                    categoria, valor, descricao, anunciante_id
+                });
+
+                return response.status(200).json({ success: true});
+            }
+            
         } catch (error) {
             return response.status(400).json({ error: error});
         }
@@ -48,17 +84,28 @@ module.exports = {
     async update(request, response)  {
         try {
             const {id} = request.params;
-            const {anunciante_id, categoria, valor, descricao} = request.body.data;
+            const { categoria, valor, descricao} = request.body.data;
+            let [, token]  = request.headers.authorization.split(' ');
+            let decoded = await promisify(jwt.verify)(token, config.secret);
+            if(!decoded){
+                return response.status(401).json({
+                    error: true,
+                    code: 130,
+                    message: "O token está expirado!"
+                })
+            }else {
+                const anuncio = await connection('anuncios').where('id',id).first();
+                let anunciante_id = decoded.id;
+                if(anuncio == null || anuncio.anunciante_id != anunciante_id){
+                    return response.status(401).json( {error: 'Operação não permitida'});
+                }
 
-            const anuncio = await connection('anuncios').where('id',id).first();
-            
-            if(anuncio == null || anuncio.anunciante_id != anunciante_id){
-                return response.status(401).json( {error: 'Operação não permitida'});
+                await connection('anuncios').where('id',id).update({categoria, valor, descricao});
+
+                return response.status(200).json({ success: true});
+
             }
-
-            await connection('anuncios').where('id',id).update({categoria, valor, descricao});
-
-            return response.status(200).json({ success: true});
+            
         } catch (error) {
             return response.status(400).json({ error: error});
         }
@@ -66,18 +113,33 @@ module.exports = {
     },
 
     async delete (request,response) {
-        const {id} = request.params;
-        const anunciante_id = request.headers.anunciante_id;
 
-        const anuncio = await connection('anuncios').where('id',id).select('anunciante_id').first();
+        try {
+            const {id} = request.params;
+            let [, token]  = request.headers.authorization.split(' ');
+            let decoded = await promisify(jwt.verify)(token, config.secret);
+            if(!decoded){
+                return response.status(401).json({
+                    error: true,
+                    code: 130,
+                    message: "O token está expirado!"
+                })
+            }else {
+                let anunciante_id = decoded.id;
+                const anuncio = await connection('anuncios').where('id',id).select('anunciante_id').first();
 
-        if(anuncio == null || anuncio.anunciante_id != anunciante_id){
-            return response.status(401).json( {error: 'Operação não permitida'});
-        }
+                if(anuncio == null || anuncio.anunciante_id != anunciante_id){
+                    return response.status(401).json( {error: 'Operação não permitida'});
+                }
 
-        await connection('anuncios').where('id',id).delete();
+                await connection('anuncios').where('id',id).delete();
 
-        return response.status(204).send();
+                return response.status(204).send();
+            }
+            
+        } catch (error) {
+            return response.status(400).json({ error: error});
+        }        
     },
 
 

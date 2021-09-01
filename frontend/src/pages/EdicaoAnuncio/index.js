@@ -19,9 +19,6 @@ export default function Edit(request){
     
     useEffect(() => {
         api.get(`http://localhost:3333/anuncios/${anuncio_id}`,{
-            headers:{
-                anunciante_id: user.id,
-            }
         }).then(response => {
             setCategoria(response.data.categoria);
             setValor(response.data.valor);
@@ -70,8 +67,17 @@ export default function Edit(request){
                                 <select className="select"  
                                     value={categoria}
                                     onChange={ e => setCategoria(e.target.value)} required>
-                                    <option></option>
-                                    <option>Auxiliar de serviços gerais</option>
+                                    <option value=""></option>
+                                    <option value="auxiliar_servicos_gerais">Auxiliar de serviços gerais</option>
+                                    <option value="baba">Babá</option>
+                                    <option value="festas">Festas</option>
+                                    <option value="encanador">Encanador</option>
+                                    <option value="informatica">Informática</option>
+                                    <option value="jardineiro">Jardineiro</option>
+                                    <option value="marceneiro">Marceneiro</option>
+                                    <option value="pedreiro">Pedreiro</option>
+                                    <option value="pintor">Pintor</option>
+                                    <option value="transporte">Transporte</option>
                                 </select>
 
                                 <strong>Valor</strong>
@@ -88,11 +94,10 @@ export default function Edit(request){
 
                             </div>
                         </div>
-                        <div className="botoes">
+                        <div className='botoes-edit-anuncio'>
                             <button className="confirmar" type="submit">Cadastrar</button>
                             <button className="cancelar" onClick={() => retornarPerfil()} >Cancelar</button>
                         </div>
-                        
                         
                     </form>
                 </section>

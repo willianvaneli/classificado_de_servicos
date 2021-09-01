@@ -20,7 +20,6 @@ module.exports = {
                 });
             }
 
-            console.log(anunciante);
             return response.status(200).json({
                 anunciante:{
                     id: anunciante.id,

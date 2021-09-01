@@ -1,0 +1,52 @@
+.home{
+    display: flex;
+}
+
+.controles{
+    width: 20rem;
+    height: 50rem;
+    padding: 1em 1em 1em 1em;
+    border-width: 0 1px  0 0;
+    border-style: solid;
+    border-color: rgb(110, 110, 110);
+}
+
+.valor{
+    padding-top: 1em;
+}
+
+.slider-content{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    column-gap: 1em;
+    
+}
+
+.slider-content strong{
+    min-width: 2em;
+}
+
+
+.container-anuncios{
+    width: 100%;
+    padding: 2em 0 0 2em ;
+}
+
+.container-anuncios .linha{
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(300px,300px)
+    );
+    grid-gap:1.5rem;
+    list-style: none;
+}
+
+.container-anuncios .linha .item {
+    width: 100%;
+}
+
+.container-anuncios ul li img{
+    width: 100%;
+}
