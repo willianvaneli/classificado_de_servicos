@@ -37,7 +37,7 @@ export default function Nav(){
             <header>
                 <nav>
                     <a className="logo" href="/">Classificados</a>
-                    <div className="menu" onClick={handleClick}>
+                    <div className="menu" onClick={handleClick} data-testid="menu">
                         <div className="line1"></div>
                         <div className="line2"></div>
                         <div className="line3"></div>

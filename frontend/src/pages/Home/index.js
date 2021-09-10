@@ -55,7 +55,7 @@ export default function Home(){
         <div className="home">
             <div className="controles">
                 <strong>Categoria</strong>
-                <select className="select" id="categoria" name="categoria" 
+                <select className="select" id="categoria" name="categoria" data-testid="categoria"
                 onChange={handleChangeCategoria} >
                     <option value=""></option>
                     <option value="auxiliar_servicos_gerais">Auxiliar de serviços gerais</option>
@@ -71,7 +71,7 @@ export default function Home(){
                 </select>
                 <div className="valor">
                     <strong >Valor</strong>
-                    <div className="slider-content">
+                    <div className="slider-content" data-testid="slider-content">
                     <strong>{valor[0]}</strong>
                     <Slider className="slider"
                         value={valor}
